@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <ImageView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:src="@drawable/logo" />
+
+
+    <TextView
+        android:id="@+id/txtScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/checkbox1"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="504dp"
+        android:layout_marginBottom="102dp"
+        android:text="100"
+        android:textColor="#ff00"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/btnPlay"
+        android:layout_width="154dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@null"
+        android:src="@drawable/playbuttotn" />
+
+    <CheckBox
+        android:id="@+id/checkbox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/checkbox2"/>
+
+    <CheckBox
+        android:id="@+id/checkbox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/checkbox3"/>
+
+    <CheckBox
+        android:id="@+id/checkbox3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
+    <SeekBar
+        android:progressDrawable="@android:color/transparent"
+        android:id="@+id/seekbar1"
+        android:layout_width="match_parent"
+        android:thumb="@drawable/char1"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/seekbar2"
+        android:layout_toRightOf="@id/checkbox1"/>
+
+    <SeekBar
+        android:progressDrawable="@android:color/transparent"
+        android:id="@+id/seekbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:thumb="@drawable/char2"
+        android:layout_above="@id/seekbar3"
+        android:layout_toRightOf="@id/checkbox2"/>
+
+    <SeekBar
+        android:progressDrawable="@android:color/transparent"
+        android:id="@+id/seekbar3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:thumb="@drawable/char3"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/checkbox3"/>
+
+    <EditText
+        android:id="@+id/textScoreBet"
+        android:layout_width="81dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/checkbox1"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="452dp"
+        android:layout_marginBottom="47dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:text="10"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/checkbox1"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="105dp"
+        android:layout_toStartOf="@+id/txtScore"
+        android:text="Tổng :"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="114dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/checkbox1"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginBottom="60dp"
+        android:layout_toStartOf="@+id/textScoreBet"
+        android:text="Tiền cược :"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="222dp"
+        android:text="Reset" />
+
+</RelativeLayout>
