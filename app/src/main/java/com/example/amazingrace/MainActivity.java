@@ -26,7 +26,7 @@ import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     MediaPlayer mediaPlayer;
-    MediaPlayer mediaPlayer1;
+    MediaPlayer mediaPlayer1,mediaPlayer2,mediaPlayer3;
     TextView txtDiem;
     EditText txtDiemCuoc;
     ImageButton ibtnPlay;
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     SeekBar skOne, skTwo, skThree;
 
     Button buttonRe;
-    int sodiem = 100,diemBiTru,count;
+    int sodiem = 100,diemBiTru,count,diemHientai;
     private ArrayList<CheckBox> mChecks;
     private ArrayList<CheckBox> mSelectedChecks;
     private List<SeekBar> seekBarList;
@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSelectedChecks = new ArrayList<CheckBox>();
 
         mediaPlayer1 = MediaPlayer.create(this, R.raw.soxo);
+        mediaPlayer2 = MediaPlayer.create(this, R.raw.tiengdongdung);
+        mediaPlayer3 = MediaPlayer.create(this, R.raw.tiengdongdung_1);
         mediaPlayer = MediaPlayer.create(this, R.raw.blackjack);
         mediaPlayer.start();
 
@@ -68,14 +70,75 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int oneNum = random.nextInt(max);
                 int secondNum = random.nextInt(max);
                 int thirdNum = random.nextInt(max);
-                skOne.setProgress(skOne.getProgress() + oneNum + secondNum + 5);
-                skTwo.setProgress(skTwo.getProgress() + secondNum + thirdNum + 12);
-                skThree.setProgress(skThree.getProgress() + thirdNum + oneNum + 8);
+                skOne.setProgress(skOne.getProgress() + oneNum);
+                skTwo.setProgress(skTwo.getProgress() + secondNum);
+                skThree.setProgress(skThree.getProgress() + thirdNum );
                 seekBarList = new ArrayList<SeekBar>();
                 seekBarList.add(skOne);
                 seekBarList.add(skTwo);
                 seekBarList.add(skThree);
-                checkWinner(seekBarList,this);
+
+                if (mSelectedChecks.size() > 1) {
+                    checkWinner(seekBarList,this);
+                }else {
+                    if (skOne.getProgress() >= skOne.getMax()){
+                        this.cancel();
+                        ibtnPlay.setVisibility(View.VISIBLE);
+                        Toast.makeText(MainActivity.this, "ONE WIN", Toast.LENGTH_SHORT).show();
+
+                        if(cbOne.isChecked()) {
+                            sodiem +=diemBiTru;
+                            Toast.makeText(MainActivity.this, "Bạn đoán chính xác", Toast.LENGTH_SHORT).show();
+                            onPause();
+                            mediaPlayer3.start();
+                        }else {
+                            sodiem -=diemBiTru;
+                            Toast.makeText(MainActivity.this, "Bạn đoán sai rồi", Toast.LENGTH_SHORT).show();
+                            onPause();
+                            mediaPlayer2.start();
+                        }
+                        txtDiem.setText(sodiem+"");
+                        EnableCheckBox();
+                    }
+
+                    if (skTwo.getProgress() >= skTwo.getMax()){
+                        this.cancel();
+                        ibtnPlay.setVisibility(View.VISIBLE);
+                        Toast.makeText(MainActivity.this, "TWO WIN", Toast.LENGTH_SHORT).show();
+                        if(cbTwo.isChecked()) {
+                            sodiem +=diemBiTru;
+                            onPause();
+                            mediaPlayer3.start();
+                            Toast.makeText(MainActivity.this, "Bạn đoán chính xác", Toast.LENGTH_SHORT).show();
+                        }else {
+                            sodiem -=diemBiTru;
+                            Toast.makeText(MainActivity.this, "Bạn đoán sai rồi", Toast.LENGTH_SHORT).show();
+                            onPause();
+                            mediaPlayer2.start();
+                        }
+                        txtDiem.setText(sodiem+"");
+                        EnableCheckBox();
+                    }
+
+                    if (skThree.getProgress() >= skThree.getMax()){
+                        this.cancel();
+                        ibtnPlay.setVisibility(View.VISIBLE);
+                        Toast.makeText(MainActivity.this, "THREE WIN", Toast.LENGTH_SHORT).show();
+                        if(cbThree.isChecked()) {
+                            sodiem +=diemBiTru;
+                            onPause();
+                            mediaPlayer3.start();
+                            Toast.makeText(MainActivity.this, "Bạn đoán chính xác", Toast.LENGTH_SHORT).show();
+                        }else {
+                            sodiem -=diemBiTru;
+                            onPause();
+                            mediaPlayer2.start();
+                            Toast.makeText(MainActivity.this, "Bạn đoán sai rồi", Toast.LENGTH_SHORT).show();
+                        }
+                        txtDiem.setText(sodiem+"");
+                        EnableCheckBox();
+                    }
+                }
 
             }
 
@@ -214,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
            winnerList.remove(1);
             Log.d("Winner3", winnerList.toString());
         }
-
+                diemHientai = sodiem;
             if (!winnerList.isEmpty()){
                 if (winnerList.size() == 2){
                     Log.d("Winner", winnerList.toString());
@@ -232,10 +295,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Toast.makeText(MainActivity.this, "ONE Lose", Toast.LENGTH_SHORT).show();
                             sodiem -= diemBiTru;
                         }
-                        // thêm cái onPause vô đây trước
-                        onPause();
-                        // chạy nhạc mới
-                        mediaPlayer.start();
                     }
                     if (cbTwo.isChecked()) {
                         if (winnerList.get(0).equals(skTwo)){
@@ -248,10 +307,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Toast.makeText(MainActivity.this, "TWO Lose", Toast.LENGTH_SHORT).show();
                             sodiem -= diemBiTru;
                         }
-                        // thêm cái onPause vô đây trước
-                        onPause();
-                        // chạy nhạc mới
-                        mediaPlayer.start();
                     }
                     if (cbThree.isChecked()) {
                         if (winnerList.get(0).equals(skThree)){
@@ -264,13 +319,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Toast.makeText(MainActivity.this, "THREE Lose", Toast.LENGTH_SHORT).show();
                             sodiem -= diemBiTru;
                         }
-                        // thêm cái onPause vô đây trước
+                    }
+                    Log.d("diemHientai",String.valueOf(diemHientai));
+                    Log.d("sodiem",String.valueOf(sodiem));
+                    if(sodiem > diemHientai) {
                         onPause();
-                        // chạy nhạc mới
-                        mediaPlayer.start();
+                        Log.d("sodiem1",String.valueOf(sodiem));
+                        mediaPlayer3.start();
+                    }else if(sodiem < diemHientai){
+                        Log.d("sodiem2",String.valueOf(sodiem));
+                        onPause();
+                        mediaPlayer2.start();
+                    }else {
+                        onPause();
+                        mediaPlayer2.start();
                     }
                 }
+
             }
+
             txtDiem.setText(sodiem+"");
             EnableCheckBox();
             txtDiem.setFocusableInTouchMode(true);
